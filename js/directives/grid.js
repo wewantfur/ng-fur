@@ -147,7 +147,6 @@
     			$('body').on('keydown keyup', keyHandler);
     			
     			scope.$on('$destroy', function() {
-    				console.log('DESTROY');
         			$('body').off('keydown keyup', keyHandler);
     			});
 	        }
