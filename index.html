@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="fur">
+	<head>
+		<link href="http://cdn.wewantfur.com/basicfur/css/basicfur-v1-min.css" rel="stylesheet" />
+		<style type="text/css" media="screen">
+			body {
+				font-family: Ubuntu;	
+			}
+			
+			grid {
+				border: 1px solid gray;
+				
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+			
+			
+	.fur-header {
+		border: 1px solid gray;
+	}
+	
+	.fur-cell,
+	.fur-headercell {
+		float: left;
+		width: 100px;
+		padding: 0 2px;
+	}
+	.fur-rows,
+	.fur-rows > li {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+	}
+	
+	.fur-rows > li:hover {
+		background: #abcdef;
+	}
+	
+	.fur-selected {
+		font-weight: bold;
+	}
+	
+	.fur-row {
+		overflow: hidden;
+		width: 100%;
+	}
+	
+	.fur-col-id {
+		width: 50px;
+		text-align: right;
+	}
+		</style>
+	</head>
+
+	<body>
+	
+		<div ng-controller="mainCtrl">
+			<h1>{{title}}</h1>
+			
+			<button ng-click="addPage()">Add page</button>
+			<hr />
+			
+			<grid dataprovider="pages" columns="columns"></grid>
+			
+
+		</div>
+	
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.js"></script>
+		
+		<script src="js/app.js"></script>
+		<script src="js/mainCtrl.js"></script>
+		<script src="js/directives/grid.js"></script>
+	</body>
+</html>
