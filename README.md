@@ -17,3 +17,5 @@ Where `dataprovider` is an array. The `columns` attributes is optional, when pro
 	sortFunction: function(a) { return a.toString();}// A formatter for sorting
 }
 ```
+
+If the columns attribute is omitted, the columns are generated from the dataprovider object
