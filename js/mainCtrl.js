@@ -108,7 +108,7 @@ fur.controller("mainCtrl", [ '$scope',
 			$scope.columns = [{label:'#', value:'id', sortFunction: function(a) {
 				return Number(a.id);
 			}}, {label:'Name', value:'name', sortFunction: function(a){
-				return a.name.toLowerCase();}}, 'phone'];
+				return a.name.toLowerCase();}}, 'phone', {label:'E-mail address', value:'email'}];
 			
 			$scope.addPage = function() {
 				$scope.pages.push($scope.allpages.pop());

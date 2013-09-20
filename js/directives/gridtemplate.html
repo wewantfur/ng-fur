@@ -3,7 +3,7 @@
 		<div class="fur-headercell fur-col-{{col.value}}" ng-repeat="col in columndef" data-index="{{$index}}" ng-click="sortColumn()">{{col.label}}</div>
 	</div>
 	<ul class="fur-rows">
-		<li ng-repeat="row in rows" class="fur-row clearfix" ng-class="{'fur-selected': selection[row.$$hashKey] == true}" ng-click="selectRow()" data-rowid="{{$id}}">
+		<li ng-repeat="row in dataprovider" class="fur-row clearfix" ng-class="{'fur-selected': selection[row.$$hashKey] == true}" ng-click="selectRow()" data-rowid="{{$id}}">
 			<div class="fur-cell fur-col-{{col.value}}" ng-repeat="col in columndef" data-rowindex="{{$parent.$index}}" data-colindex="{{$index}}">{{row[col.value]}}</div>
 		</li>
 	</ul>

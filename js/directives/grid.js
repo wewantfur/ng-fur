@@ -69,7 +69,7 @@
 	        					max--;
 	        				}
 	        				for(var i = min; i <= max; i++) {
-	        					$scope.selection[$scope.rows[i].$$hashKey] = $scope.selection[$scope.rows[i].$$hashKey] ? false : true;
+	        					$scope.selection[$scope.dataprovider[i].$$hashKey] = $scope.selection[$scope.dataprovider[i].$$hashKey] ? false : true;
 	        				}
 	        			}
 	        		} else {
@@ -80,10 +80,10 @@
 	        		$scope.prevRow = this;
 
 	        		var s = [];
-	        		var rl = $scope.rows.length;
+	        		var rl = $scope.dataprovider.length;
 	        		for(var i = 0; i < rl; i++) {
-	        			if($scope.selection[$scope.rows[i].$$hashKey])
-	        				s.push($scope.rows[i]);
+	        			if($scope.selection[$scope.dataprovider[i].$$hashKey])
+	        				s.push($scope.dataprovider[i]);
 	        		}
 	        		$scope.$emit('gridSelectionChanged', s);
 	        	};
@@ -93,7 +93,7 @@
 	        	 */
 	        	$scope.resetSort = function() {
 	        		if($scope.sortCol != null) {
-	        			$scope.rows = $filter('orderBy')($scope.rows, this.sortCol, $scope.sortReverse);
+	        			$scope.dataprovider = $filter('orderBy')($scope.dataprovider, this.sortCol, $scope.sortReverse);
 	        		}
 	        	};
 	        	
@@ -101,11 +101,11 @@
 	        		$scope.sortReverse = $scope.sortCol == this.col.value ? !$scope.sortReverse : false ;
 	        		$scope.sortCol = this.col.value;
 	        		if(this.col.hasOwnProperty('sortFunction')) {
-	        			$scope.rows = $filter('orderBy')($scope.rows, this.col.sortFunction, $scope.sortReverse);
+	        			$scope.dataprovider = $filter('orderBy')($scope.dataprovider, this.col.sortFunction, $scope.sortReverse);
 	        			
 	        		} else if(typeof($scope.sortFunction) == 'undefined') {
 	        			// Use build-in sort
-	        			$scope.rows = $filter('orderBy')($scope.rows, this.col.value, $scope.sortReverse);
+	        			$scope.dataprovider = $filter('orderBy')($scope.dataprovider, this.col.value, $scope.sortReverse);
 	        		}
 	        	};
 	        },
@@ -143,7 +143,6 @@
     					}
     					scope.columndef = columndef;
     				}
-    				scope.rows = angular.copy(value);
     				scope.resetSort();
     			}, true);
     			

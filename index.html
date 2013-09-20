@@ -3,8 +3,30 @@
 	<head>
 		<link href="http://cdn.wewantfur.com/basicfur/css/basicfur-v1-min.css" rel="stylesheet" />
 		<style type="text/css" media="screen">
+			.clearfix:after {
+				content: ".";
+				display: block;
+				clear: both;
+				visibility: hidden;
+				line-height: 0;
+				height: 0;
+			}
+			 
+			.clearfix {
+				display: inline-block;
+			}
+			 
+			html[xmlns] .clearfix {
+				display: block;
+			}
+			 
+			* html .clearfix {
+				height: 1%;
+			}
+		
 			body {
-				font-family: Ubuntu;	
+				font-family: Ubuntu;
+				padding: 10px;
 			}
 			
 			grid {
@@ -20,13 +42,17 @@
 			
 			
 	.fur-header {
-		border: 1px solid gray;
+		border-bottom: 1px solid gray;
+		font-weight: bold;
+		font-size: 14pt;
+		color: white;
+		background-color: #0087CA;
 	}
 	
 	.fur-cell,
 	.fur-headercell {
 		float: left;
-		width: 100px;
+		width: 200px;
 		padding: 0 2px;
 	}
 	.fur-rows,
@@ -38,11 +64,11 @@
 	}
 	
 	.fur-rows > li:hover {
-		background: #abcdef;
+		background: #87B6CE;
 	}
 	
 	.fur-selected {
-		font-weight: bold;
+		background:#99CFEA;
 	}
 	
 	.fur-row {
@@ -65,7 +91,7 @@
 			<button ng-click="addPage()">Add page</button>
 			<hr />
 			
-			<grid dataprovider="pages" columns="columns"></grid>
+			<grid dataprovider="pages" columns="columns" class="clearfix"></grid>
 			
 
 		</div>
