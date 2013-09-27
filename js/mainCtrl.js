@@ -1,9 +1,7 @@
 fur = angular.module('fur');
 fur.controller("mainCtrl", [ '$scope',
 		function($scope ) {
-			$scope.pages = [];
-			$scope.allpages = [
-			            	{"id": 1, "name": "Fletcher Skinner", "phone": "1 23 842 9414-4828", "email": "luctus.felis.purus@scelerisquedui.edu"},
+			$scope.pages = [{"id": 1, "name": "Fletcher Skinner", "phone": "1 23 842 9414-4828", "email": "luctus.felis.purus@scelerisquedui.edu"},
 			            	{"id": 2, "name": "Thane Becker", "phone": "1 45 618 8429-7001", "email": "Cras.eu.tellus@cursuset.co.uk"},
 			            	{"id": 3, "name": "James Flores", "phone": "1 33 612 1591-4049", "email": "lacinia.at@consequatenimdiam.edu"},
 			            	{"id": 4, "name": "Akeem Gilliam", "phone": "1 81 490 8387-8101", "email": "gravida.sagittis.Duis@nequenon.net"},
@@ -12,7 +10,9 @@ fur.controller("mainCtrl", [ '$scope',
 			            	{"id": 7, "name": "Caesar French", "phone": "1 50 342 3325-2072", "email": "purus.accumsan.interdum@nulla.net"},
 			            	{"id": 8, "name": "Malachi Klein", "phone": "1 82 333 9045-2702", "email": "ante@ornareegestas.co.uk"},
 			            	{"id": 9, "name": "Oren Weaver", "phone": "1 18 637 6353-0012", "email": "in@arcuMorbi.ca"},
-			            	{"id": 10, "name": "Berk Tate", "phone": "1 89 900 4432-2330", "email": "viverra.Donec.tempus@etmagnisdis.edu"},
+			            	{"id": 10, "name": "Berk Tate", "phone": "1 89 900 4432-2330", "email": "viverra.Donec.tempus@etmagnisdis.edu"}];
+			$scope.allpages = [
+			            	
 			            	{"id": 11, "name": "Edan Aguirre", "phone": "1 13 236 7994-0829", "email": "vel.sapien.imperdiet@Duissitamet.net"},
 			            	{"id": 12, "name": "Forrest Kane", "phone": "1 97 807 5735-0354", "email": "accumsan.neque@gravida.co.uk"},
 			            	{"id": 13, "name": "Caldwell Pittman", "phone": "1 90 988 3819-2699", "email": "sed.hendrerit@massaVestibulum.net"},
@@ -119,7 +119,7 @@ fur.controller("mainCtrl", [ '$scope',
 								value:'email'}];
 			
 			$scope.addPage = function() {
-				$scope.pages.push($scope.allpages.pop());
+				$scope.pages.push($scope.allpages.shift());
 			};
 			
 			$scope.$on('gridSelectionChanged', function(evt, selection) {});

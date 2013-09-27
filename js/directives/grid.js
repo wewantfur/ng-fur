@@ -113,9 +113,16 @@
 	        	
 	        	scope.$watch('columndef', function(value) {
 	        		if(value && value.length > 0) {
-	        			var w = Math.floor(99 / value.length);
-	        			for(var i = 0; i < value.length; i++) {
-	        				$('.fur-col-' + value[i].value).css('width', + w + '%');
+	        			if(scope.autoWidth) {
+		        			var w = Math.floor(99 / value.length);
+		        			for(var i = 0; i < value.length; i++) {
+		        				$('.fur-col-' + value[i].value).css('width', + w + '%');
+		        			}
+	        			} else {
+	        				for(var i = 0; i < value.length; i++) {
+	        					$('.fur-col-' + value[i].value).css('width', null);
+	        				}
+	        				
 	        			}
 	        		}
 	        	}, true);
@@ -132,6 +139,8 @@
     						}
     					}
     				}
+
+					scope.autoWidth = false;
     				scope.columndef = columndef;
     			}, true);
 	        	
@@ -141,6 +150,7 @@
     					for(var prop in value[0]) {
 							columndef.push({'label': prop, 'value': prop});
     					}
+    					scope.autoWidth = true;
     					scope.columndef = columndef;
     				}
     				scope.resetSort();
