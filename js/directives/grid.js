@@ -34,7 +34,7 @@
 	        },
 	        
 	        templateUrl: 'js/directives/gridtemplate.html',
-	        controller: function($scope, $element, $attrs, $filter) {
+	        controller: ['$scope', '$element', '$attrs', '$filter', function($scope, $element, $attrs, $filter) {
 	        	
 	        	// Is ctrlKey down
 	        	$scope.ctrlKey = false;
@@ -108,7 +108,7 @@
 	        			$scope.dataprovider = $filter('orderBy')($scope.dataprovider, this.col.value, $scope.sortReverse);
 	        		}
 	        	};
-	        },
+	        }],
 	        link: function(scope, elem, attrs, ctrl) {
 	        	
 	        	scope.$watch('columndef', function(value) {
