@@ -1,7 +1,7 @@
 /**
  * Angular Grid directive
  * @author Ids Klijnsma - Fur
- * @version 0.1
+ * @version 0.2
  * Copyright (C) 2013 Fur
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -148,7 +148,7 @@
     			
     			var keyHandler = function(e) {
     				if(e.type == 'keydown') {
-    					if(e.ctrlKey && e.keyCode == 17) {
+    					if((e.ctrlKey || e.metaKey)) {
     						// Ctrl key pressed
     						scope.ctrlKey = true;
     					}
