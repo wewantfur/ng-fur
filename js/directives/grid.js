@@ -1,7 +1,7 @@
 /**
  * Angular Grid directive
  * @author Ids Klijnsma - Fur
- * @version 0.2
+ * @version 0.3
  * Copyright (C) 2013 Fur
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,10 +21,85 @@
 (function (angular, $) {
 	
 	var furGridDirectives = angular.module('ngfur.grid.directives', []);
-	angular.module('ngfur.grid', ['ngfur.grid.directives']);
+	var defaultCellTemplate = "{{row[col.value]}}";
+	var defaultHeaderTemplate = "{{col.label}}";
+	
+
+	
+	furGridDirectives.directive('furGridHeaderCell', ["$compile", "$templateCache", function ($compile, $templateCache) {
+		return {
+	    	restrict: 'A',
+	        scope: false,
+	        replace: true,
+	        compile: function() {
+	            return {
+	                pre: function($scope, elem, attrs) {
+	                	var html = "<span>{{col.value}}</span>";
+	                	
+	                	if($scope.columndef[$scope.$index].hasOwnProperty('headerTemplate')) {
+	                		elem.append($compile($scope.columndef[$scope.$index].headerTemplate)($scope));
+	                	} else {
+	                		elem.append($compile(html)($scope));
+	                	}
+	                }
+	            };
+	        }
+	    };
+	}]);
+	
+	furGridDirectives.directive('furGridHeader', ["$compile", "$templateCache", function ($compile, $templateCache) {
+		return {
+			restrict: 'A',
+			scope: false,
+			compile: function() {
+				return {
+					pre: function($scope, elem, attrs) {
+						var html = $templateCache.get("ng-fur-grid-header.html");
+						elem.append($compile(html)($scope));
+					}
+				};
+			}
+		};
+	}]);
+	
+	furGridDirectives.directive('furGridRowCell', ["$compile", "$templateCache", function ($compile, $templateCache) {
+		return {
+			restrict: 'A',
+			scope: false,
+			replace: true,
+			compile: function() {
+				return {
+					pre: function($scope, elem, attrs) {
+						var html = "<span>{{row[col.value]}}</span>";
+						
+						if($scope.columndef[$scope.$index].hasOwnProperty('template')) {
+							elem.append($compile($scope.columndef[$scope.$index].template)($scope));
+						} else {
+							elem.append($compile(html)($scope));
+						}
+					}
+				};
+			}
+		};
+	}]);
+	
+	furGridDirectives.directive('furGridRows', ["$compile", "$templateCache", function ($compile, $templateCache) {
+		return {
+			restrict: 'A',
+			scope: false,
+			compile: function() {
+				return {
+					pre: function($scope, elem, attrs) {
+						var html = $templateCache.get("ng-fur-grid-row.html");
+						elem.append($compile(html)($scope));
+					}
+				};
+			}
+		};
+	}]);
 	
 	
-	furGridDirectives.directive('grid', function () {
+	furGridDirectives.directive('grid', ["$compile", "$templateCache", function ($compile, $templateCache) {
 	    return {
 	    	restrict: 'E',
 	        scope: {
@@ -33,7 +108,6 @@
 	        	sortFunction: '@'
 	        },
 	        
-	        templateUrl: 'js/directives/gridtemplate.html',
 	        controller: ['$scope', '$element', '$attrs', '$filter', function($scope, $element, $attrs, $filter) {
 	        	
 	        	// Is ctrlKey down
@@ -109,76 +183,101 @@
 	        		}
 	        	};
 	        }],
-	        link: function(scope, elem, attrs, ctrl) {
-	        	
-	        	scope.$watch('columndef', function(value) {
-	        		if(value && value.length > 0) {
-	        			if(scope.autoWidth) {
-		        			var w = Math.floor(99 / value.length);
-		        			for(var i = 0; i < value.length; i++) {
-		        				$('.fur-col-' + value[i].value).css('width', + w + '%');
-		        			}
-	        			} else {
-	        				for(var i = 0; i < value.length; i++) {
-	        					$('.fur-col-' + value[i].value).css('width', null);
+	        
+	        compile: function() {
+	            return {
+	                pre: function(scope, elem, attrs) {
+	                	scope.$watch('columndef', function(value) {
+	    	        		if(value && value.length > 0) {
+	    	        			if(scope.autoWidth) {
+	    		        			var w = Math.floor(99 / value.length);
+	    		        			for(var i = 0; i < value.length; i++) {
+	    		        				$('.fur-col-' + value[i].value).css('width', + w + '%');
+	    		        			}
+	    	        			} else {
+	    	        				for(var i = 0; i < value.length; i++) {
+	    	        					$('.fur-col-' + value[i].value).css('width', null);
+	    	        				}
+	    	        				
+	    	        			}
+	    	        		}
+	    	        	}, true);
+	    	        	
+	        			scope.$watch('columns', function(value) {
+	        				var columndef = [];
+	        				if($.isArray(value)) {
+	        					
+	        					for(var i = 0; i < value.length; i++) {
+	        						if(typeof(value[i]) == 'string') {
+	        							columndef.push({'label': value[i], 'value': value[i]});
+	        						} else {
+	        							columndef.push(value[i]);
+	        						}
+	        					}
 	        				}
-	        				
-	        			}
-	        		}
-	        	}, true);
-	        	
-    			scope.$watch('columns', function(value) {
-    				var columndef = [];
-    				if($.isArray(value)) {
-    					
-    					for(var i = 0; i < value.length; i++) {
-    						if(typeof(value[i]) == 'string') {
-    							columndef.push({'label': value[i], 'value': value[i]});
-    						} else {
-    							columndef.push(value[i]);
-    						}
-    					}
-    				}
 
-					scope.autoWidth = false;
-    				scope.columndef = columndef;
-    			}, true);
-	        	
-    			scope.$watch('dataprovider', function(value) {
-    				if(value && value.length > 0 && scope.columndef.length == 0) {
-    					var columndef = [];
-    					for(var prop in value[0]) {
-							columndef.push({'label': prop, 'value': prop});
-    					}
-    					scope.autoWidth = true;
-    					scope.columndef = columndef;
-    				}
-    				scope.resetSort();
-    			}, true);
-    			
-    			var keyHandler = function(e) {
-    				if(e.type == 'keydown') {
-    					if((e.ctrlKey || e.metaKey)) {
-    						// Ctrl key pressed
-    						scope.ctrlKey = true;
-    					}
-    					
-    					if(e.shiftKey) {
-    						scope.shiftKey = true;
-    					}
-    				} else {
-    					scope.ctrlKey = false;
-    					scope.shiftKey = false;
-    					
-    				}
-    			};
-    			
-    			$('body').on('keydown keyup', keyHandler);
-    			
-    			scope.$on('$destroy', function() {
-        			$('body').off('keydown keyup', keyHandler);
-    			});
+	    					scope.autoWidth = false;
+	        				scope.columndef = columndef;
+	        			}, true);
+	    	        	
+	        			scope.$watch('dataprovider', function(value) {
+	        				if(value && value.length > 0 && scope.columndef.length == 0) {
+	        					var columndef = [];
+	        					for(var prop in value[0]) {
+	    							columndef.push({'label': prop, 'value': prop});
+	        					}
+	        					scope.autoWidth = true;
+	        					scope.columndef = columndef;
+	        				}
+	        				scope.resetSort();
+	        			}, true);
+	        			
+	        			var keyHandler = function(e) {
+	        				if(e.type == 'keydown') {
+	        					if((e.ctrlKey || e.metaKey)) {
+	        						// Ctrl key pressed
+	        						scope.ctrlKey = true;
+	        					}
+	        					
+	        					if(e.shiftKey) {
+	        						scope.shiftKey = true;
+	        					}
+	        				} else {
+	        					scope.ctrlKey = false;
+	        					scope.shiftKey = false;
+	        					
+	        				}
+	        			};
+	        			
+	        			$('body').on('keydown keyup', keyHandler);
+	        			
+	        			scope.$on('$destroy', function() {
+	            			$('body').off('keydown keyup', keyHandler);
+	        			});
+	                	
+	                	var html = $templateCache.get("ng-fur-grid.html");
+	                	var cmp = $compile(html)(scope);
+	                	elem.append(cmp);
+	                
+	                }
+	            };
 	        }
 	    };
-	});
+	}]);
+
+	angular.module('ngfur.grid', ['ngfur.grid.directives']).run(["$templateCache", function($templateCache) {
+		
+		$templateCache.put("ng-fur-grid-row.html", 
+			'<li ng-repeat="row in dataprovider" class="fur-row clearfix" ng-class="{\'fur-selected\': selection[row.$$hashKey] == true}" ng-click="selectRow()" data-rowid="{{$id}}">' +
+			'	<div class="fur-cell fur-col-{{col.value}}" ng-repeat="col in columndef" data-rowindex="{{$parent.$index}}" data-colindex="{{$index}}" fur-grid-row-cell></div>' +		
+			'</li>');
+		$templateCache.put("ng-fur-grid-header.html", 
+			'<div class="fur-headercell fur-col-{{col.value}}" ng-repeat="col in columndef" data-index="{{$index}}" ng-click="sortColumn()" fur-grid-header-cell></div>');
+		
+		$templateCache.put("ng-fur-grid.html", 
+			'<div class="fur-grid">' +
+				'<div class="fur-header clearfix" fur-grid-header></div>' +	
+				'<ul class="fur-rows" fur-grid-rows></ul>' +	
+			'</div>');
+	}]);
 }(angular, jQuery));

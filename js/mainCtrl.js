@@ -109,13 +109,19 @@ fur.controller("mainCtrl", [ '$scope',
 								value:'id', 
 								sortFunction: function(a) {
 									return Number(a.id);
-								}}, 
+								},
+								headerTemplate: '<i>[{{col.label}}]</i>',
+								template: '<i>{{row.id}}</i>'
+								}, 
 								{label:'Name', 
 								value:'name', 
 								sortFunction: function(a){
 									return a.name.toLowerCase();}}, 
-								'phone', 
+									
+								'phone',
+								
 								{label:'E-mail address', 
+								template:'<a href="mailto:{{row.email}}">{{row.email}}</a>',
 								value:'email'}];
 			
 			$scope.addPage = function() {
