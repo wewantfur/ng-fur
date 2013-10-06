@@ -77,6 +77,14 @@
 						} else {
 							elem.append($compile(html)($scope));
 						}
+						
+						$(elem).on('dblclick', function(e){							
+							$scope.$emit('rowDoubleClick',$scope.$parent.row);
+						});
+						
+						$(elem).on('click', function(e){							
+							$scope.$emit('rowClick',$scope.$parent.row);
+						});
 					}
 				};
 			}
@@ -187,6 +195,7 @@
 	        compile: function() {
 	            return {
 	                pre: function(scope, elem, attrs) {
+	                	
 	                	scope.$watch('columndef', function(value) {
 	    	        		if(value && value.length > 0) {
 	    	        			if(scope.autoWidth) {

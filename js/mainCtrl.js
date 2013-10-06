@@ -128,5 +128,9 @@ fur.controller("mainCtrl", [ '$scope',
 				$scope.pages.push($scope.allpages.shift());
 			};
 			
+			$scope.$on('rowDoubleClick', function(evt,data) {
+				console.log('dblClickHandler',evt,data);
+			});
+			
 			$scope.$on('gridSelectionChanged', function(evt, selection) {});
 		} ]);
