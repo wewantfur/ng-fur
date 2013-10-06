@@ -79,11 +79,11 @@
 						}
 						
 						$(elem).on('dblclick', function(e){							
-							$scope.$emit('rowDoubleClick',$scope.$parent.row);
+			        		$scope.onDoubleClick({evt:$scope.$parent.row});
 						});
 						
-						$(elem).on('click', function(e){							
-							$scope.$emit('rowClick',$scope.$parent.row);
+						$(elem).on('click', function(e){				
+			        		$scope.onClick({evt:$scope.$parent.row});
 						});
 					}
 				};
@@ -113,7 +113,9 @@
 	        scope: {
 	        	columns: '=',
 	        	dataprovider: '=',
-	        	sortFunction: '@'
+	        	sortFunction: '@',
+	        	onClick: '&',
+	        	onDoubleClick: '&'
 	        },
 	        
 	        controller: ['$scope', '$element', '$attrs', '$filter', function($scope, $element, $attrs, $filter) {

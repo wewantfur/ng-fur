@@ -129,8 +129,12 @@ fur.controller("mainCtrl", [ '$scope',
 			};
 			
 			$scope.$on('rowDoubleClick', function(evt,data) {
-				console.log('dblClickHandler',evt,data);
+//				console.log('dblClickHandler',evt,data);
 			});
 			
 			$scope.$on('gridSelectionChanged', function(evt, selection) {});
+			
+			$scope.dblClickHandler = function(evt) {
+				console.log('ctrl.dblClickHandler', evt);
+			}
 		} ]);
