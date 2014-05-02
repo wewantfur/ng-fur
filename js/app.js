@@ -1,3 +1,3 @@
 var fur = angular.module('fur',
 		// dependancies
-		['ngfur.grid']);
+		['ngfur.grid','ngfur.divider']);

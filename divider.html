@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" ng-app="fur">
 	<head>
-		<link href="http://cdn.wewantfur.com/basicfur/css/basicfur-v1-min.css" rel="stylesheet" />
+		<link href="http://cdn.wewantfur.com/basicfur/css/basicfur-v3-min.css" rel="stylesheet" />
 		<style type="text/css" media="screen">
 			.clearfix:after {
 				content: ".";
@@ -31,6 +31,7 @@
 		
 	</style>
 	<link href="css/grid.css" rel="stylesheet"  media="screen" />
+	<link href="css/jquery.divider.css" rel="stylesheet"  media="screen" />
 	</head>
 
 	<body>
@@ -40,19 +41,27 @@
 			
 			<button ng-click="addPage()">Add item</button>
 			
-			<grid dataprovider="pages" 
-					columns="columns" 
-					on-double-click="dblClickHandler(evt)"
-					class="clearfix"></grid>
-			
+			<divider>
+				<div>
+					<h1>I'm the left panel</h1>
+				</div>
+				<div>
+					<h1>I'm the middle panel</h1>
+				</div>
+				<div>
+					<h1>I'm the right panel</h1>
+				</div>
+			</divider>
 
 		</div>
 	
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 		
+		<script src="js/3rdparty/jquery.divider.js"></script>
 		<script src="js/app.js"></script>
 		<script src="js/mainCtrl.js"></script>
 		<script src="js/directives/grid.js"></script>
+		<script src="js/directives/divider.js"></script>
 	</body>
 </html>
